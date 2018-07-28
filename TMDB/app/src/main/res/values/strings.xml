@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">TMDB</string>
+
+    <string name="discover_title">DISCOVER</string>
+    <string name="movies_title">MOVIES</string>
+    <string name="tv_title">TV SHOWS</string>
+    <string name="people_title">PEOPLE</string>
+    <string name="favorites_title">MY FAVORITES</string>
+
+</resources>

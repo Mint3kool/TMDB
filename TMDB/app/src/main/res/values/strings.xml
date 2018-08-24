@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">TMDB</string>
 
+    <string name="home_title">HOME</string>
     <string name="discover_title">DISCOVER</string>
     <string name="movies_title">MOVIES</string>
     <string name="tv_title">TV SHOWS</string>
     <string name="people_title">PEOPLE</string>
     <string name="favorites_title">MY FAVORITES</string>
+    <string name="title_activity_movie">MovieActivity</string>
+    <string name="title_activity_tv">TVActivity</string>
+    <string name="title_activity_people">PeopleActivity</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

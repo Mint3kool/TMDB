@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setupNavigationDrawer();
     }
 
+    //cheese
     public void setupMainActivityTabs() {
         FixedTabsPageAdapter myAdapter = new FixedTabsPageAdapter(getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);

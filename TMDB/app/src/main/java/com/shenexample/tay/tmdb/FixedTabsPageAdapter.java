@@ -5,6 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.shenexample.tay.tmdb.Main.HomeFragment;
+import com.shenexample.tay.tmdb.Main.MovieFragment;
+import com.shenexample.tay.tmdb.Main.TVFragment;
+
 public class FixedTabsPageAdapter extends FragmentPagerAdapter{
 
     public FixedTabsPageAdapter(FragmentManager fm) {

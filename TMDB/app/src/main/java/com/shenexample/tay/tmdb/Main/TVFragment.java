@@ -1,4 +1,4 @@
-package com.shenexample.tay.tmdb;
+package com.shenexample.tay.tmdb.Main;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,15 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class MovieFragment extends Fragment {
+import com.shenexample.tay.tmdb.R;
 
-    public MovieFragment() {
+public class TVFragment extends Fragment {
+
+    public TVFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_movie, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_tv, container, false);
         return rootView;
     }
 }

@@ -23,11 +23,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setupMainActivityTabs();
-
         setupNavigationDrawer();
     }
 
-    //cheese
     public void setupMainActivityTabs() {
         MainPageAdapter myAdapter = new MainPageAdapter(getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);

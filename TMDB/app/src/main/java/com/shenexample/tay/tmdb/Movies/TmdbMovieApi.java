@@ -15,7 +15,7 @@ import org.json.JSONObject;
  * Created by Tay on 4/26/2018.
  * Class that directly links to the api for our gas site
  */
-public class TmdbMovieApi implements Response.Listener<String>, Response.ErrorListener, MovieInterface {
+public class TmdbMovieApi implements Response.Listener<String>, Response.ErrorListener {
 
     private RequestQueue queue;
     private final String SITEDOMAIN = "http://api.mygasfeed.com";

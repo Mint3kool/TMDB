@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.shenexample.tay.tmdb.FixedTabsPageAdapter;
 import com.shenexample.tay.tmdb.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     //cheese
     public void setupMainActivityTabs() {
-        FixedTabsPageAdapter myAdapter = new FixedTabsPageAdapter(getSupportFragmentManager());
+        MainPageAdapter myAdapter = new MainPageAdapter(getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(myAdapter);
 

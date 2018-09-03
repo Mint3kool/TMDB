@@ -1,5 +1,6 @@
 package com.shenexample.tay.tmdb.Movies;
 
+import android.app.Application;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,26 +14,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.List;
+
 public class MovieFragment extends Fragment {
 
+    private MovieRepository myRepo;
 
     public MovieFragment() {
         // Required empty public constructor
     }
 
-    public void ConvertJsonToMovies(JSONArray movieArray) {
-        new StoreMoviesTask(TMDBRoomDb.INSTANCE).execute(movieArray);
+    public void StoreMovies(JSONArray movieArray) {
+        myRepo = new MovieRepository(getActivity().getApplication());
+        new StoreMoviesTask(myRepo).execute(movieArray);
     }
 
     public void DisplayMovies() {
-
+        List<Movie> myList = myRepo.getAllMovies();
+        int size = myList.size();
     }
 
-    private static class StoreMoviesTask extends AsyncTask<JSONArray, Void, Void> {
-        private MovieDAO movieDAO;
+    private class StoreMoviesTask extends AsyncTask<JSONArray, Void, Void> {
+        private MovieRepository movieRepo;
 
-        public StoreMoviesTask(TMDBRoomDb db) {
-            movieDAO = db.movieDAO();
+        public StoreMoviesTask(MovieRepository repo) {
+            movieRepo = repo;
         }
 
         @Override
@@ -41,7 +47,7 @@ public class MovieFragment extends Fragment {
             for (int i = 0; i < myArray.length(); i++) {
                 try {
                     Movie newMovie = convertToMovie(myArray.getJSONObject(i));
-                    movieDAO.insert(newMovie);
+                    movieRepo.insert(newMovie);
                 } catch (Exception e) {
                     Log.d("MovieAccessError", "Movie at index " + i + " not found, skipping.");
                 }
@@ -67,5 +73,12 @@ public class MovieFragment extends Fragment {
             }
             return myMovie;
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            DisplayMovies();
+        }
     }
+
+
 }

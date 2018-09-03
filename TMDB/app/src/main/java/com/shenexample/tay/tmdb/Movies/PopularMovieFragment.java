@@ -1,6 +1,8 @@
 package com.shenexample.tay.tmdb.Movies;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,14 +28,9 @@ public class PopularMovieFragment extends MovieFragment{
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         getMovies();
-    }
-
-    @Override
-    public void DisplayMovies() {
-        Log.d("cheese", "yes");
     }
 
     public void getMovies() {

@@ -17,8 +17,8 @@ public interface MovieDAO {
     @Query("DELETE FROM " + TABLE_NAME)
     void deleteAll();
 
-    @Query("SELECT * FROM " + TABLE_NAME + " ORDER BY :field LIMIT 20")
-    List<Movie> findMoviesOrderByField(String field);
+    @Query("SELECT * FROM " + TABLE_NAME )
+    List<Movie> getAllMovies();
 
     @Query("SELECT * FROM " + TABLE_NAME + " WHERE movie_id = :id")
     Movie getMovie(int id);

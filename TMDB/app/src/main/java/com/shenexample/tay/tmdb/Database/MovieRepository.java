@@ -4,11 +4,12 @@ import android.app.Application;
 import android.os.AsyncTask;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MovieRepository {
     private MovieDAO movieDAO;
 
-    MovieRepository(Application app) {
+    public MovieRepository(Application app) {
         TMDBRoomDb db = TMDBRoomDb.getDatabase(app);
         movieDAO = db.movieDAO();
     }
@@ -17,8 +18,14 @@ public class MovieRepository {
         return movieDAO.getMovie(id);
     }
 
-    public List<Movie> getMovies(String field) {
-        return movieDAO.findMoviesOrderByField(field);
+    public List<Movie> getAllMovies() {
+        getAllMoviesAsync task = new getAllMoviesAsync(movieDAO);
+        try {
+            return task.execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void insert(Movie movie) {
@@ -36,6 +43,19 @@ public class MovieRepository {
         protected Void doInBackground(final Movie ... params) {
             asyncMovieDao.insert(params[0]);
             return null;
+        }
+    }
+
+    private class getAllMoviesAsync extends AsyncTask<Void, Void, List<Movie>> {
+        private MovieDAO asyncMovieDao;
+
+        getAllMoviesAsync(MovieDAO dao) {
+            asyncMovieDao = dao;
+        }
+
+        @Override
+        protected List<Movie> doInBackground(Void... voids) {
+            return asyncMovieDao.getAllMovies();
         }
     }
 }

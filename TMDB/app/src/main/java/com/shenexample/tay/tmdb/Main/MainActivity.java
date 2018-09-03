@@ -22,8 +22,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setupMainActivityTabs();
         setupNavigationDrawer();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setupMainActivityTabs();
     }
 
     public void setupMainActivityTabs() {

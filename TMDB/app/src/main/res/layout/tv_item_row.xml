@@ -4,17 +4,17 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/movie_icon"
+        android:id="@+id/tv_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"/>
 
     <TextView
-        android:id="@+id/movie_name"
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="show_name"
+        android:text="tv_name"
         android:textSize="23sp"
-        android:layout_toEndOf="@+id/movie_icon"
+        android:layout_toEndOf="@+id/tv_icon"
         android:textColor="#000000"/>
 
     <ImageView
@@ -28,31 +28,31 @@
         android:adjustViewBounds="true"/>
 
     <TextView
-        android:id="@+id/movie_popularity"
+        android:id="@+id/tv_popularity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/movie_name"
-        android:text="show_popularity"
+        android:layout_below="@+id/tv_name"
+        android:text="tv_popularity"
         android:textSize="20sp"
-        android:layout_toEndOf="@+id/movie_icon"/>
+        android:layout_toEndOf="@+id/tv_icon"/>
 
 
     <TextView
-        android:id="@+id/release_date"
+        android:id="@+id/tv_release_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/movie_popularity"
+        android:layout_below="@+id/tv_popularity"
         android:text="release_date"
         android:textSize="20sp"
-        android:layout_toEndOf="@+id/movie_icon"/>
+        android:layout_toEndOf="@+id/tv_icon"/>
 
     <TextView
-        android:id="@+id/current_status"
+        android:id="@+id/tv_current_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/release_date"
+        android:layout_below="@+id/tv_release_date"
         android:layout_marginTop="1dp"
-        android:text="current_status"
+        android:text="tv_current_status"
         android:textSize="20sp"
-        android:layout_toEndOf="@id/movie_icon"/>
+        android:layout_toEndOf="@id/tv_icon"/>
 </RelativeLayout>

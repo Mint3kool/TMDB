@@ -49,7 +49,7 @@ public class TmdbMovieApi implements Response.Listener<String>, Response.ErrorLi
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("results");
-            myMovieFragment.StoreMovies(jsonArray);
+            myMovieFragment.ConvertJsonToMovies(jsonArray);
         } catch (JSONException je) {
             je.printStackTrace();
         }

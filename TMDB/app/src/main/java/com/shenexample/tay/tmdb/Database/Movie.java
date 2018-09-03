@@ -17,11 +17,11 @@ public class Movie {
     }
 
     @NonNull
-    public int getMovie_id() {
+    public String getMovie_id() {
         return movie_id;
     }
 
-    public void setMovie_id(@NonNull int movie_id) {
+    public void setMovie_id(@NonNull String movie_id) {
         this.movie_id = movie_id;
     }
 
@@ -43,19 +43,27 @@ public class Movie {
         this.release_date = release_date;
     }
 
-    public int getVote_count() {
+    public String getVote_count() {
         return vote_count;
     }
 
-    public void setVote_count(int vote_count) {
+    public void setVote_count(String vote_count) {
         this.vote_count = vote_count;
     }
 
-    public double getPopularity() {
+    public String getVote_average() {
+        return vote_average;
+    }
+
+    public void setVote_average(String vote_average) {
+        this.vote_average = vote_average;
+    }
+
+    public String getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(double popularity) {
+    public void setPopularity(String popularity) {
         this.popularity = popularity;
     }
 
@@ -87,13 +95,14 @@ public class Movie {
     @NonNull
     private int id;
     @NonNull
-    private int movie_id;
+    private String movie_id;
     @NonNull
     private String title;
     @NonNull
     private String release_date;
-    private int vote_count;
-    private double popularity;
+    private String vote_count;
+    private String vote_average;
+    private String popularity;
     private String poster_path;
     private String backdrop_path;
     private String overview;

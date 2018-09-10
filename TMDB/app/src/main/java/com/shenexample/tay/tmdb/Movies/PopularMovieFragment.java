@@ -3,22 +3,31 @@ package com.shenexample.tay.tmdb.Movies;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.shenexample.tay.tmdb.Database.MovieRepository;
 import com.shenexample.tay.tmdb.R;
-
-import java.util.logging.Logger;
 
 public class PopularMovieFragment extends MovieFragment{
 
     private TmdbMovieApi api;
+    private MovieRepository myRepository;
+
 
     public PopularMovieFragment() {
         //Required empty public constructor
+    }
+
+    @Override
+    public void DisplayMovies() {
+
+    }
+
+    @Override
+    public MovieRepository getRepository() {
+        return myRepository;
     }
 
     @Override
@@ -30,10 +39,12 @@ public class PopularMovieFragment extends MovieFragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getMovies();
+        myRepository = new MovieRepository(getActivity().getApplication());
+        RefreshDatabase();
     }
 
-    public void getMovies() {
+    @Override
+    public void GetMovies() {
         api = new TmdbMovieApi(this);
         api.getPopularMovies();
     }

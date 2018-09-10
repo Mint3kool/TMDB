@@ -18,6 +18,10 @@ public class MovieRepository {
         return movieDAO.getMovie(id);
     }
 
+    public void deleteMovies() {
+        movieDAO.deleteAll();
+    }
+
     public List<Movie> getAllMovies() {
         getAllMoviesAsync task = new getAllMoviesAsync(movieDAO);
         try {

@@ -1,44 +1,77 @@
 package com.shenexample.tay.tmdb.Movies;
 
-import android.app.Application;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.shenexample.tay.tmdb.Database.Movie;
-import com.shenexample.tay.tmdb.Database.MovieDAO;
 import com.shenexample.tay.tmdb.Database.MovieRepository;
-import com.shenexample.tay.tmdb.Database.TMDBRoomDb;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-
-public class MovieFragment extends Fragment {
-
-    private MovieRepository myRepo;
+public abstract class MovieFragment extends Fragment {
 
     public MovieFragment() {
         // Required empty public constructor
     }
 
-    public void StoreMovies(JSONArray movieArray) {
-        myRepo = new MovieRepository(getActivity().getApplication());
-        new StoreMoviesTask(myRepo).execute(movieArray);
+    public void StoreMoviesInDatabase(JSONArray movieArray) {
+        new StoreMoviesTask(getRepository()).execute(movieArray);
     }
 
-    public void DisplayMovies() {
-        List<Movie> myList = myRepo.getAllMovies();
-        int size = myList.size();
+    public void RefreshDatabase() {
+        new RefreshDatabaseTask(getRepository()).execute();
+    }
+
+    public void ClearDatabase() {
+        new ClearDatabaseTask(getRepository()).execute();
+    }
+
+    public abstract MovieRepository getRepository();
+
+    public abstract void DisplayMovies();
+
+    public abstract void GetMovies();
+
+    private class RefreshDatabaseTask extends AsyncTask<Void, Void, Void> {
+        private MovieRepository movieRepository;
+
+        public RefreshDatabaseTask(MovieRepository repo) {
+            movieRepository = repo;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            movieRepository.deleteMovies();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            GetMovies();
+        }
+    }
+
+    private class ClearDatabaseTask extends AsyncTask<Void, Void, Void> {
+        private MovieRepository movieRepository;
+
+        public ClearDatabaseTask(MovieRepository repo) {
+            movieRepository = repo;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            movieRepository.deleteMovies();
+            return null;
+        }
     }
 
     private class StoreMoviesTask extends AsyncTask<JSONArray, Void, Void> {
-        private MovieRepository movieRepo;
+        private MovieRepository movieRepository;
 
         public StoreMoviesTask(MovieRepository repo) {
-            movieRepo = repo;
+            movieRepository = repo;
         }
 
         @Override
@@ -47,7 +80,7 @@ public class MovieFragment extends Fragment {
             for (int i = 0; i < myArray.length(); i++) {
                 try {
                     Movie newMovie = convertToMovie(myArray.getJSONObject(i));
-                    movieRepo.insert(newMovie);
+                    movieRepository.insert(newMovie);
                 } catch (Exception e) {
                     Log.d("MovieAccessError", "Movie at index " + i + " not found, skipping.");
                 }

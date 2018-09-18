@@ -16,41 +16,39 @@ public abstract class MovieFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public abstract void DisplayMovies();
+
+    public abstract void GetMovies();
+
+    public abstract void RefreshDatabase();
+
+    public abstract MovieRepository getRepository();
+
     public void StoreMoviesInDatabase(JSONArray movieArray) {
         new StoreMoviesTask(getRepository()).execute(movieArray);
-    }
-
-    public void RefreshDatabase() {
-        new RefreshDatabaseTask(getRepository()).execute();
     }
 
     public void ClearDatabase() {
         new ClearDatabaseTask(getRepository()).execute();
     }
 
-    public abstract MovieRepository getRepository();
-
-    public abstract void DisplayMovies();
-
-    public abstract void GetMovies();
-
-    private class RefreshDatabaseTask extends AsyncTask<Void, Void, Void> {
-        private MovieRepository movieRepository;
-
-        public RefreshDatabaseTask(MovieRepository repo) {
-            movieRepository = repo;
+    public Movie convertToMovie(JSONObject o) {
+        Movie myMovie = new Movie();
+        try {
+            myMovie.setVote_count(o.getString("vote_count"));
+            myMovie.setMovie_id(o.getString("id"));
+            myMovie.setVote_average(o.getString("vote_average"));
+            myMovie.setTitle(o.getString("title"));
+            myMovie.setPopularity(o.getString("popularity"));
+            myMovie.setPoster_path(o.getString("poster_path"));
+            myMovie.setBackdrop_path(o.getString("backdrop_path"));
+            myMovie.setOverview(o.getString("overview"));
+            myMovie.setRelease_date(o.getString("release_date"));
+        } catch (Exception e) {
+            Log.d("MovieConversionError", "Could not convert json to movie object. ");
+            e.printStackTrace();
         }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            movieRepository.deleteMovies();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            GetMovies();
-        }
+        return myMovie;
     }
 
     private class ClearDatabaseTask extends AsyncTask<Void, Void, Void> {
@@ -86,25 +84,6 @@ public abstract class MovieFragment extends Fragment {
                 }
             }
             return null;
-        }
-
-        private Movie convertToMovie(JSONObject o) {
-            Movie myMovie = new Movie();
-            try {
-                myMovie.setVote_count("vote_count");
-                myMovie.setMovie_id("id");
-                myMovie.setVote_average("vote_average");
-                myMovie.setTitle("title");
-                myMovie.setPopularity("popularity");
-                myMovie.setPoster_path("poster_path");
-                myMovie.setBackdrop_path("backdrop_path");
-                myMovie.setOverview("overview");
-                myMovie.setRelease_date("release_date");
-            } catch (Exception e) {
-                Log.d("MovieConversionError", "Could not convert json to movie object. ");
-                e.printStackTrace();
-            }
-            return myMovie;
         }
 
         @Override

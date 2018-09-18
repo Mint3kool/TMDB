@@ -1,5 +1,6 @@
 package com.shenexample.tay.tmdb.Movies;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -47,5 +48,29 @@ public class PopularMovieFragment extends MovieFragment{
     public void GetMovies() {
         api = new TmdbMovieApi(this);
         api.getPopularMovies();
+    }
+
+    @Override
+    public void RefreshDatabase() {
+        new RefreshDatabaseTask(getRepository()).execute();
+    }
+
+    private class RefreshDatabaseTask extends AsyncTask<Void, Void, Void> {
+        private MovieRepository movieRepository;
+
+        public RefreshDatabaseTask(MovieRepository repo) {
+            movieRepository = repo;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            movieRepository.deleteMovies();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            GetMovies();
+        }
     }
 }

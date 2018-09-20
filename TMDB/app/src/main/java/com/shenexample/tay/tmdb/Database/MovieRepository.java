@@ -3,6 +3,7 @@ package com.shenexample.tay.tmdb.Database;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -22,7 +23,7 @@ public class MovieRepository {
         movieDAO.deleteAll();
     }
 
-    public List<Movie> getAllMovies() {
+    public ArrayList<Movie> getAllMovies() {
         getAllMoviesAsync task = new getAllMoviesAsync(movieDAO);
         try {
             return task.execute().get();
@@ -50,7 +51,7 @@ public class MovieRepository {
         }
     }
 
-    private class getAllMoviesAsync extends AsyncTask<Void, Void, List<Movie>> {
+    private class getAllMoviesAsync extends AsyncTask<Void, Void, ArrayList<Movie>> {
         private MovieDAO asyncMovieDao;
 
         getAllMoviesAsync(MovieDAO dao) {
@@ -58,7 +59,7 @@ public class MovieRepository {
         }
 
         @Override
-        protected List<Movie> doInBackground(Void... voids) {
+        protected ArrayList<Movie> doInBackground(Void... voids) {
             return asyncMovieDao.getAllMovies();
         }
     }

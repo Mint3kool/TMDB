@@ -5,7 +5,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Dao
 public interface MovieDAO {
@@ -18,7 +18,7 @@ public interface MovieDAO {
     void deleteAll();
 
     @Query("SELECT * FROM " + TABLE_NAME )
-    List<Movie> getAllMovies();
+    ArrayList<Movie> getAllMovies();
 
     @Query("SELECT * FROM " + TABLE_NAME + " WHERE movie_id = :id")
     Movie getMovie(int id);

@@ -7,9 +7,15 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
+import com.shenexample.tay.tmdb.Database.Movie;
 import com.shenexample.tay.tmdb.Database.MovieRepository;
 import com.shenexample.tay.tmdb.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PopularMovieFragment extends MovieFragment{
 
@@ -23,7 +29,8 @@ public class PopularMovieFragment extends MovieFragment{
 
     @Override
     public void DisplayMovies() {
-
+        ArrayList<Movie> movieArray = myRepository.getAllMovies();
+        MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieArray);
     }
 
     @Override

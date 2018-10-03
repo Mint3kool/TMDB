@@ -2,7 +2,11 @@ package com.shenexample.tay.tmdb.Database;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+
+import java.io.ByteArrayOutputStream;
 
 @Entity(tableName = MovieDAO.TABLE_NAME)
 public class Movie {
@@ -91,6 +95,25 @@ public class Movie {
         this.overview = overview;
     }
 
+    public byte[] getMovieIcon() {
+        return movieIcon;
+    }
+
+    public void setMovieIcon(byte[] value) {
+        movieIcon = value;
+    }
+
+    public Bitmap getMovieIconBitmap() {
+        return BitmapFactory.decodeByteArray(movieIcon, 0, movieIcon.length);
+    }
+
+    public void setMovieIconBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+
+        movieIcon = stream.toByteArray();
+    }
+
     @PrimaryKey(autoGenerate = true)
     @NonNull
     private int id;
@@ -106,5 +129,6 @@ public class Movie {
     private String poster_path;
     private String backdrop_path;
     private String overview;
+    private byte[] movieIcon;
 
 }

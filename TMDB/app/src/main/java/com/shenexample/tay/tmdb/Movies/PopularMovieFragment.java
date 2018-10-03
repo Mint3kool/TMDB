@@ -4,10 +4,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.shenexample.tay.tmdb.Database.Movie;
@@ -21,6 +21,7 @@ public class PopularMovieFragment extends MovieFragment{
 
     private TmdbMovieApi api;
     private MovieRepository myRepository;
+    private ListView movieListView;
 
 
     public PopularMovieFragment() {
@@ -29,8 +30,12 @@ public class PopularMovieFragment extends MovieFragment{
 
     @Override
     public void DisplayMovies() {
-        ArrayList<Movie> movieArray = myRepository.getAllMovies();
-        MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieArray);
+        List<Movie> movieArray = myRepository.getAllMovies();
+        ArrayList<Movie> movieArrayList = new ArrayList<>(movieArray);
+        Log.d("size", Integer.toString(movieArrayList.size()));
+        MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieArrayList);
+
+        movieListView.setAdapter(movieAdapter);
     }
 
     @Override
@@ -41,6 +46,7 @@ public class PopularMovieFragment extends MovieFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_movie, container, false);
+        movieListView = rootView.findViewById(R.id.movie_list);
         return rootView;
     }
 

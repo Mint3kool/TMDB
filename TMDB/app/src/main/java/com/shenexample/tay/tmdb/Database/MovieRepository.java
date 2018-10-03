@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class MovieRepository {
     private MovieDAO movieDAO;
@@ -23,7 +22,7 @@ public class MovieRepository {
         movieDAO.deleteAll();
     }
 
-    public ArrayList<Movie> getAllMovies() {
+    public List<Movie> getAllMovies() {
         getAllMoviesAsync task = new getAllMoviesAsync(movieDAO);
         try {
             return task.execute().get();
@@ -51,7 +50,7 @@ public class MovieRepository {
         }
     }
 
-    private class getAllMoviesAsync extends AsyncTask<Void, Void, ArrayList<Movie>> {
+    private class getAllMoviesAsync extends AsyncTask<Void, Void, List<Movie>> {
         private MovieDAO asyncMovieDao;
 
         getAllMoviesAsync(MovieDAO dao) {
@@ -59,7 +58,7 @@ public class MovieRepository {
         }
 
         @Override
-        protected ArrayList<Movie> doInBackground(Void... voids) {
+        protected List<Movie> doInBackground(Void... voids) {
             return asyncMovieDao.getAllMovies();
         }
     }

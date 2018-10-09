@@ -20,6 +20,12 @@ public interface MovieDAO {
     @Query("SELECT * FROM " + TABLE_NAME )
     List<Movie> getAllMovies();
 
+    @Query("SELECT * FROM " + TABLE_NAME + " ORDER BY popularity LIMIT 20")
+    List<Movie> getPopularMovies();
+
+    @Query("SELECT * FROM " + TABLE_NAME + " ORDER BY :category LIMIT :start, :finish")
+    List<Movie> getNextPage(String category, int start, int finish);
+
     @Query("SELECT * FROM " + TABLE_NAME + " WHERE movie_id = :id")
     Movie getMovie(int id);
 }

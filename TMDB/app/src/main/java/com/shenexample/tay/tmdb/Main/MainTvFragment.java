@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import com.shenexample.tay.tmdb.R;
 
-public class TVFragment extends Fragment {
+public class MainTvFragment extends Fragment {
 
-    public TVFragment() {
+    public MainTvFragment() {
         // Required empty public constructor
     }
 

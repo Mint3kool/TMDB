@@ -24,8 +24,6 @@ public abstract class MovieFragment extends Fragment {
 
     public abstract void GetMovies();
 
-    public abstract void RefreshDatabase();
-
     public abstract MovieRepository getRepository();
 
     public void StoreMoviesInDatabase(JSONArray movieArray) {
@@ -127,3 +125,5 @@ public abstract class MovieFragment extends Fragment {
 
 
 }
+
+

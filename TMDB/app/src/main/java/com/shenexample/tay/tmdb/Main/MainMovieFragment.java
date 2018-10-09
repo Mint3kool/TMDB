@@ -1,6 +1,5 @@
-package com.shenexample.tay.tmdb.Movies;
+package com.shenexample.tay.tmdb.Main;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,25 +11,28 @@ import android.widget.ListView;
 
 import com.shenexample.tay.tmdb.Database.Movie;
 import com.shenexample.tay.tmdb.Database.MovieRepository;
+import com.shenexample.tay.tmdb.Movies.MovieAdapter;
+import com.shenexample.tay.tmdb.Movies.MovieFragment;
+import com.shenexample.tay.tmdb.Movies.MovieApi;
 import com.shenexample.tay.tmdb.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PopularMovieFragment extends MovieFragment{
+public class MainMovieFragment extends MovieFragment {
 
     private MovieApi api;
     private MovieRepository myRepository;
     private ListView movieListView;
 
 
-    public PopularMovieFragment() {
+    public MainMovieFragment() {
         //Required empty public constructor
     }
 
     @Override
     public void DisplayMovies() {
-        List<Movie> movieArray = myRepository.getAllMovies();
+        List<Movie> movieArray = myRepository.getPopularMovies();
         ArrayList<Movie> movieArrayList = new ArrayList<>(movieArray);
         Log.d("size", Integer.toString(movieArrayList.size()));
         MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieArrayList);
@@ -54,36 +56,11 @@ public class PopularMovieFragment extends MovieFragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         myRepository = new MovieRepository(getActivity().getApplication());
-        RefreshDatabase();
     }
 
     @Override
     public void GetMovies() {
         api = new MovieApi(this);
         api.getPopularMovies();
-    }
-
-    @Override
-    public void RefreshDatabase() {
-        new RefreshDatabaseTask(getRepository()).execute();
-    }
-
-    private class RefreshDatabaseTask extends AsyncTask<Void, Void, Void> {
-        private MovieRepository movieRepository;
-
-        public RefreshDatabaseTask(MovieRepository repo) {
-            movieRepository = repo;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            movieRepository.deleteMovies();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            GetMovies();
-        }
     }
 }

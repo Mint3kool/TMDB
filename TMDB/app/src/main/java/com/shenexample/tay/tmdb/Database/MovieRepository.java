@@ -32,6 +32,16 @@ public class MovieRepository {
         }
     }
 
+    public List<Movie> getPopularMovies() {
+        getPopularMoviesAsync task = new getPopularMoviesAsync(movieDAO);
+        try {
+            return task.execute().get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void insert(Movie movie) {
         new insertMovieAsync(movieDAO).execute(movie);
     }
@@ -60,6 +70,19 @@ public class MovieRepository {
         @Override
         protected List<Movie> doInBackground(Void... voids) {
             return asyncMovieDao.getAllMovies();
+        }
+    }
+
+    private class getPopularMoviesAsync extends AsyncTask<Void, Void, List<Movie>> {
+        private MovieDAO asyncMovieDao;
+
+        getPopularMoviesAsync(MovieDAO dao) {
+            asyncMovieDao = dao;
+        }
+
+        @Override
+        protected List<Movie> doInBackground(Void... voids) {
+            return asyncMovieDao.getPopularMovies();
         }
     }
 }

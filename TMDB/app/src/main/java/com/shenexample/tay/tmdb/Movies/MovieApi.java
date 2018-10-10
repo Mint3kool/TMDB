@@ -22,7 +22,6 @@ public class MovieApi implements Response.Listener<String>, Response.ErrorListen
 
     private RequestQueue queue;
     private MovieFragment myMovieFragment;
-    private final String SITEDOMAIN = "http://api.mygasfeed.com";
 
     public MovieApi(MovieFragment frag) {
         myMovieFragment = frag;
@@ -49,7 +48,7 @@ public class MovieApi implements Response.Listener<String>, Response.ErrorListen
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("results");
-            myMovieFragment.StoreMoviesInDatabase(jsonArray);
+            myMovieFragment.storeMoviesInDatabase(jsonArray);
         } catch (JSONException je) {
             je.printStackTrace();
         }

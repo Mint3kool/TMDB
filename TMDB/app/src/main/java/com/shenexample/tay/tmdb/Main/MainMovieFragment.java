@@ -16,6 +16,8 @@ import com.shenexample.tay.tmdb.Movies.MovieFragment;
 import com.shenexample.tay.tmdb.Movies.MovieApi;
 import com.shenexample.tay.tmdb.R;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,24 +27,13 @@ public class MainMovieFragment extends MovieFragment {
     private MovieRepository myRepository;
     private ListView movieListView;
 
-
-    public MainMovieFragment() {
-        //Required empty public constructor
-    }
-
-    @Override
-    public void DisplayMovies() {
-        List<Movie> movieArray = myRepository.getPopularMovies();
-        ArrayList<Movie> movieArrayList = new ArrayList<>(movieArray);
-        Log.d("size", Integer.toString(movieArrayList.size()));
-        MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieArrayList);
-
-        movieListView.setAdapter(movieAdapter);
-    }
-
     @Override
     public MovieRepository getRepository() {
         return myRepository;
+    }
+
+    public MainMovieFragment() {
+        //Required empty public constructor
     }
 
     @Override
@@ -52,15 +43,22 @@ public class MainMovieFragment extends MovieFragment {
         return rootView;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        myRepository = new MovieRepository(getActivity().getApplication());
+    public void getMovies() {
+        api = new MovieApi(this);
+        api.getPopularMovies();
     }
 
     @Override
-    public void GetMovies() {
-        api = new MovieApi(this);
-        api.getPopularMovies();
+    public void storeMoviesInDatabase(JSONArray movieArray) {
+        myRepository.StoreAllMovies(movieArray);
+    }
+
+    public void displayMovies() {
+        List<Movie> movieArray = myRepository.getPopularMovies();
+        ArrayList<Movie> movieArrayList = new ArrayList<>(movieArray);
+        Log.d("size", Integer.toString(movieArrayList.size()));
+        MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieArrayList);
+
+        movieListView.setAdapter(movieAdapter);
     }
 }

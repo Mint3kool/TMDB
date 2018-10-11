@@ -11,7 +11,7 @@ import java.util.List;
 public interface MovieDAO {
     String TABLE_NAME = "Movie_Table";
 
-    @Insert//(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Movie movie);
 
     @Query("DELETE FROM " + TABLE_NAME)

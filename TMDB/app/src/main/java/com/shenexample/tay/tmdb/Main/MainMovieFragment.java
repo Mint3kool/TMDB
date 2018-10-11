@@ -24,23 +24,9 @@ import java.util.List;
 public class MainMovieFragment extends MovieFragment {
 
     private MovieApi api;
-    private MovieRepository myRepository;
-    private ListView movieListView;
-
-    @Override
-    public MovieRepository getRepository() {
-        return myRepository;
-    }
 
     public MainMovieFragment() {
         //Required empty public constructor
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_movie, container, false);
-        movieListView = rootView.findViewById(R.id.movie_list);
-        return rootView;
     }
 
     public void getMovies() {
@@ -50,15 +36,15 @@ public class MainMovieFragment extends MovieFragment {
 
     @Override
     public void storeMoviesInDatabase(JSONArray movieArray) {
-        myRepository.StoreAllMovies(movieArray);
+        getRepository().StoreAllMovies(movieArray);
     }
 
     public void displayMovies() {
-        List<Movie> movieArray = myRepository.getPopularMovies();
+        List<Movie> movieArray = getRepository().getPopularMovies();
         ArrayList<Movie> movieArrayList = new ArrayList<>(movieArray);
         Log.d("size", Integer.toString(movieArrayList.size()));
         MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieArrayList);
 
-        movieListView.setAdapter(movieAdapter);
+        getMovieListView().setAdapter(movieAdapter);
     }
 }

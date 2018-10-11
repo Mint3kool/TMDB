@@ -19,7 +19,7 @@ public abstract class TMDBRoomDb extends RoomDatabase{
             synchronized (TMDBRoomDb.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(ctx.getApplicationContext(),
-                            TMDBRoomDb.class, MovieDAO.TABLE_NAME).build();
+                            TMDBRoomDb.class, MovieDAO.TABLE_NAME).fallbackToDestructiveMigration().build();
                 }
             }
         }

@@ -22,8 +22,6 @@ import java.util.List;
 public class PopularMovieFragment extends MovieFragment{
 
     private MovieApi api;
-    private ListView movieListView;
-
 
     public PopularMovieFragment() {
         //Required empty public constructor
@@ -36,14 +34,7 @@ public class PopularMovieFragment extends MovieFragment{
         Log.d("size", Integer.toString(movieArrayList.size()));
         MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieArrayList);
 
-        movieListView.setAdapter(movieAdapter);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_movie, container, false);
-        movieListView = rootView.findViewById(R.id.movie_list);
-        return rootView;
+        getMovieListView().setAdapter(movieAdapter);
     }
 
     public void getMovies() {

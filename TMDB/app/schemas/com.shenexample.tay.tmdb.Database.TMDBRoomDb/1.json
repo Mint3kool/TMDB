@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "5eede8b452078233443237a8e88a7218",
+    "identityHash": "e3b0fb0d16bf70eacc843cd919407545",
     "entities": [
       {
         "tableName": "Movie_Table",
@@ -81,13 +81,24 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_Movie_Table_movie_id_title_release_date",
+            "unique": true,
+            "columnNames": [
+              "movie_id",
+              "title",
+              "release_date"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_Movie_Table_movie_id_title_release_date` ON `${TABLE_NAME}` (`movie_id`, `title`, `release_date`)"
+          }
+        ],
         "foreignKeys": []
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5eede8b452078233443237a8e88a7218\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e3b0fb0d16bf70eacc843cd919407545\")"
     ]
   }
 }

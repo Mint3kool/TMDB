@@ -1,6 +1,7 @@
 package com.shenexample.tay.tmdb.Database;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,8 +9,25 @@ import android.support.annotation.NonNull;
 
 import java.io.ByteArrayOutputStream;
 
-@Entity(tableName = MovieDAO.TABLE_NAME)
+@Entity(tableName = MovieDAO.TABLE_NAME, indices = {@Index(value = {"movie_id", "title", "release_date"},
+        unique = true)})
 public class Movie {
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    private int id;
+    @NonNull
+    private String movie_id;
+    @NonNull
+    private String title;
+    @NonNull
+    private String release_date;
+    private String vote_count;
+    private String vote_average;
+    private String popularity;
+    private String poster_path;
+    private String backdrop_path;
+    private String overview;
+    private byte[] movieIcon;
 
     @NonNull
     public int getId() {
@@ -113,22 +131,5 @@ public class Movie {
 
         movieIcon = stream.toByteArray();
     }
-
-    @PrimaryKey(autoGenerate = true)
-    @NonNull
-    private int id;
-    @NonNull
-    private String movie_id;
-    @NonNull
-    private String title;
-    @NonNull
-    private String release_date;
-    private String vote_count;
-    private String vote_average;
-    private String popularity;
-    private String poster_path;
-    private String backdrop_path;
-    private String overview;
-    private byte[] movieIcon;
 
 }

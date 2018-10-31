@@ -31,7 +31,8 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         movieTitle.setText(movie.getTitle());
 
         TextView movieVoteAverage = convertView.findViewById(R.id.movie_vote_average);
-        movieVoteAverage.setText(movie.getVote_average());
+        //movieVoteAverage.setText(movie.getVote_average());
+        movieVoteAverage.setText(movie.getPopularity());
 
         TextView movieReleaseDate = convertView.findViewById(R.id.movie_release_date);
         movieReleaseDate.setText(movie.getRelease_date());

@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.shenexample.tay.tmdb.Database.Movie;
 import com.shenexample.tay.tmdb.Database.MovieRepository;
+import com.shenexample.tay.tmdb.Database.MovieSorter;
 import com.shenexample.tay.tmdb.Movies.MovieAdapter;
 import com.shenexample.tay.tmdb.Movies.MovieFragment;
 import com.shenexample.tay.tmdb.Movies.MovieApi;
@@ -19,6 +20,7 @@ import com.shenexample.tay.tmdb.R;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainMovieFragment extends MovieFragment {
@@ -41,8 +43,14 @@ public class MainMovieFragment extends MovieFragment {
 
     public void displayMovies() {
         List<Movie> movieArray = getRepository().getPopularMovies();
+
         ArrayList<Movie> movieArrayList = new ArrayList<>(movieArray);
-        Log.d("size", Integer.toString(movieArrayList.size()));
+        Collections.sort(movieArrayList, MovieSorter.popularComparator);
+
+        for (Movie m : movieArrayList) {
+            Log.d("popularity", m.getPopularity());
+        }
+
         MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieArrayList);
 
         getMovieListView().setAdapter(movieAdapter);

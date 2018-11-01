@@ -37,8 +37,8 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         TextView movieReleaseDate = convertView.findViewById(R.id.movie_release_date);
         movieReleaseDate.setText(movie.getRelease_date());
 
-        //ImageView movieIcon = convertView.findViewById(R.id.movie_icon);
-        //movieIcon.setImageBitmap(movie.getMovieIconBitmap());
+        ImageView movieIcon = convertView.findViewById(R.id.movie_icon);
+        movieIcon.setImageBitmap(movie.getMovieIconBitmap());
 
         return convertView;
     }

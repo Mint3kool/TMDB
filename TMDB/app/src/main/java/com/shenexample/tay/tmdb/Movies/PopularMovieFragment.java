@@ -22,19 +22,21 @@ import java.util.List;
 public class PopularMovieFragment extends MovieFragment{
 
     private MovieApi api;
+    private JSONArray movieArray;
 
     public PopularMovieFragment() {
         //Required empty public constructor
     }
 
     @Override
-    public void displayMovies() {
+    public void processMovies(JSONArray movieArray) {
+        this.movieArray = movieArray; /*
         List<Movie> movieArray = getRepository().getAllMovies();
         ArrayList<Movie> movieArrayList = new ArrayList<>(movieArray);
         Log.d("size", Integer.toString(movieArrayList.size()));
         MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieArrayList);
 
-        getMovieListView().setAdapter(movieAdapter);
+        getMovieListView().setAdapter(movieAdapter);*/
     }
 
     public void getMovies() {
@@ -43,7 +45,12 @@ public class PopularMovieFragment extends MovieFragment{
     }
 
     @Override
-    public void storeMoviesInDatabase(JSONArray movieArray) {
+    public void displayMovies(ArrayList<Movie> movieArrayList) {
+
+    }
+
+    @Override
+    public void storeMoviesInDatabase(ArrayList<Movie> selectedMovies) {
 
     }
 }

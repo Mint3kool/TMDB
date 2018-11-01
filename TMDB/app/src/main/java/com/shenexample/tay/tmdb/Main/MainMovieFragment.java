@@ -18,6 +18,7 @@ import com.shenexample.tay.tmdb.Movies.MovieApi;
 import com.shenexample.tay.tmdb.R;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,22 +38,18 @@ public class MainMovieFragment extends MovieFragment {
     }
 
     @Override
-    public void storeMoviesInDatabase(JSONArray movieArray) {
-        getRepository().StoreAllMovies(movieArray);
+    public void storeMoviesInDatabase(ArrayList<Movie> selectedMovies) {
+        //getRepository().StoreAllMovies(movieArray);
     }
 
-    public void displayMovies() {
-        List<Movie> movieArray = getRepository().getPopularMovies();
+    public void processMovies(JSONArray movieArray) {
+        convertJsonArrayToArrayList(movieArray);
+    }
 
-        ArrayList<Movie> movieArrayList = new ArrayList<>(movieArray);
+    public void displayMovies(ArrayList<Movie> movieArrayList) {
         Collections.sort(movieArrayList, MovieSorter.popularComparator);
 
-        for (Movie m : movieArrayList) {
-            Log.d("popularity", m.getPopularity());
-        }
-
         MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieArrayList);
-
         getMovieListView().setAdapter(movieAdapter);
     }
 }

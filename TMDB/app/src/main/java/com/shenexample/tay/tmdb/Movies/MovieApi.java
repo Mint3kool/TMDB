@@ -48,7 +48,7 @@ public class MovieApi implements Response.Listener<String>, Response.ErrorListen
         try {
             JSONObject jsonObject = new JSONObject(response);
             JSONArray jsonArray = jsonObject.getJSONArray("results");
-            myMovieFragment.storeMoviesInDatabase(jsonArray);
+            myMovieFragment.processMovies(jsonArray);
         } catch (JSONException je) {
             je.printStackTrace();
         }

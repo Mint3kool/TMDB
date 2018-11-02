@@ -12,6 +12,8 @@ import com.shenexample.tay.tmdb.R;
 
 public class MainTvFragment extends Fragment {
 
+    public static final int MAIN_TV_ID = 2;
+
     public MainTvFragment() {
         // Required empty public constructor
     }

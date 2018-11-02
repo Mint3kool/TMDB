@@ -8,10 +8,11 @@ import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 
 @Entity(tableName = MovieDAO.TABLE_NAME, indices = {@Index(value = {"movie_id", "title", "release_date"},
         unique = true)})
-public class Movie {
+public class Movie implements Serializable{
     @PrimaryKey(autoGenerate = true)
     @NonNull
     private int id;

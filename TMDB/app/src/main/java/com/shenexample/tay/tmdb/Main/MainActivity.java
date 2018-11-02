@@ -1,5 +1,7 @@
 package com.shenexample.tay.tmdb.Main;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -9,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.shenexample.tay.tmdb.R;
@@ -16,6 +19,7 @@ import com.shenexample.tay.tmdb.R;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private int savedFragmentId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         MainPageAdapter myAdapter = new MainPageAdapter(getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(myAdapter);
+
+        viewPager.setCurrentItem(savedFragmentId);
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
@@ -76,5 +82,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            savedFragmentId = data.getIntExtra("fragmentId", 0);
+            Log.d("New Fragment ID", Integer.toString(savedFragmentId));
+        } else {
+            //No clue?
+        }
     }
 }

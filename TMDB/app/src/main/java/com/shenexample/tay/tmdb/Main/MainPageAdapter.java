@@ -4,11 +4,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+
+import com.shenexample.tay.tmdb.R;
 
 public class MainPageAdapter extends FragmentPagerAdapter{
 
+    FragmentManager fragmentManager;
+
     public MainPageAdapter(FragmentManager fm) {
         super (fm);
+        fragmentManager = fm;
     }
 
     @Override
@@ -30,16 +36,31 @@ public class MainPageAdapter extends FragmentPagerAdapter{
                 return "HOME";
         }
     }
+
     public Fragment getItem(int position) {
+        Fragment returnFragment;
+
         switch (position) {
             case 0:
-                return new HomeFragment();
+                returnFragment = new HomeFragment();
+                break;
             case 1:
-                return new MainMovieFragment();
+                returnFragment = new MainMovieFragment();
+                break;
             case 2:
-                return new MainTvFragment();
+                returnFragment = new MainTvFragment();
+                break;
             default:
-                return new HomeFragment();
+                returnFragment = new HomeFragment();
+                break;
         }
+
+//        FragmentTransaction homeTransaction = fragmentManager.beginTransaction();
+//
+//        homeTransaction.replace(R.id.view_pager, returnFragment);
+//        homeTransaction.addToBackStack(null);
+//
+//        homeTransaction.commit();
+        return returnFragment;
     }
 }

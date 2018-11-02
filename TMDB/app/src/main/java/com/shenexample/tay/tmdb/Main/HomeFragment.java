@@ -10,6 +10,8 @@ import com.shenexample.tay.tmdb.R;
 
 public class HomeFragment extends Fragment {
 
+    public static final int MAIN_HOME_ID = 0;
+
     public HomeFragment() {
         // Required empty public constructor
     }

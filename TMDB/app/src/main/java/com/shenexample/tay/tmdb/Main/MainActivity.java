@@ -1,6 +1,5 @@
 package com.shenexample.tay.tmdb.Main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -21,18 +20,24 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private int savedFragmentId = 0;
 
+    public MainActivity() {
+        Log.d("Testing", "Constructor called");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         setupNavigationDrawer();
+        Log.d("Testing", "onCreate called");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         setupMainActivityTabs();
+        Log.d("Testing", "onStart called");
     }
 
     public void setupMainActivityTabs() {

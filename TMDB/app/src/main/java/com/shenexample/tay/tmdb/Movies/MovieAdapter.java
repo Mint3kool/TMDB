@@ -3,6 +3,7 @@ package com.shenexample.tay.tmdb.Movies;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,13 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         movieReleaseDate.setText(movie.getRelease_date());
 
         ImageView movieIcon = convertView.findViewById(R.id.movie_icon);
-        movieIcon.setImageBitmap(movie.getMovieIconBitmap());
+        try {
+            movieIcon.setImageBitmap(movie.getMovieIconBitmap());
+        } catch (NullPointerException e) {
+            Log.d("Missing Image", movie.getTitle());
+            movieIcon.setImageResource(R.drawable.ic_launcher_background);
+        }
+
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,8 +2,6 @@ package com.shenexample.tay.tmdb.Main;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.shenexample.tay.tmdb.Database.Movie;
 import com.shenexample.tay.tmdb.Database.MovieSorter;
@@ -15,6 +13,7 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class MainMovieFragment extends MovieFragment {
 
@@ -30,27 +29,28 @@ public class MainMovieFragment extends MovieFragment {
     }
 
     public void getMovies() {
-
         SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(MainActivity.sharedValues, Context.MODE_PRIVATE);
 
-        if (!preferences.getBoolean(MainActivity.refreshed, true)) {
-            Log.d("Preference value", "false");
+        if (!preferences.getBoolean(MainActivity.MAIN_POPULAR_MOVIES_REFRESHED, false)) {
+            preferences.edit().putBoolean(MainActivity.MAIN_POPULAR_MOVIES_REFRESHED, true).apply();
+            api = new MovieApi(this);
+            api.getPopularMovies();
+        } else {
+            displayStoredMovies();
         }
-
-        api = new MovieApi(this);
-        api.getPopularMovies();
     }
 
     @Override
-    public void storeMoviesInDatabase(ArrayList<Movie> selectedMovies) {
-        //getRepository().StoreAllMovies(movieArray);
+    public void storeMoviesInDatabase(JSONArray movieList) {
+        getRepository().StoreAllMovies(movieList);
     }
 
-    public void processMovies(JSONArray movieArray) {
-        convertJsonArrayToArrayList(movieArray);
-    }
+    public void displayStoredMovies() {
+        List<Movie> movieList = getRepository().getPopularMovies();
 
-    public void displayMovies(ArrayList<Movie> movieArrayList) {
+        ArrayList<Movie> movieArrayList = new ArrayList<>();
+        movieArrayList.addAll(movieList);
+
         Collections.sort(movieArrayList, MovieSorter.popularComparator);
 
         MovieAdapter movieAdapter = new MovieAdapter(getContext(), movieArrayList);

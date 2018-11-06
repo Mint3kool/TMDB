@@ -3,15 +3,19 @@ package com.shenexample.tay.tmdb.Database;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 
 @Entity(tableName = MovieDAO.TABLE_NAME, indices = {@Index(value = {"movie_id", "title", "release_date"},
         unique = true)})
+@TypeConverters({Converters.class})
 public class Movie implements Serializable{
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -29,6 +33,8 @@ public class Movie implements Serializable{
     private String backdrop_path;
     private String overview;
     private byte[] movieIcon;
+    @NonNull
+    private Date lastAccessedDate;
 
     @NonNull
     public int getId() {
@@ -122,6 +128,10 @@ public class Movie implements Serializable{
         movieIcon = value;
     }
 
+    public void updateDate() {
+        lastAccessedDate = Calendar.getInstance().getTime();
+    }
+
     public Bitmap getMovieIconBitmap() {
         return BitmapFactory.decodeByteArray(movieIcon, 0, movieIcon.length);
     }
@@ -133,4 +143,12 @@ public class Movie implements Serializable{
         movieIcon = stream.toByteArray();
     }
 
+    @NonNull
+    public Date getLastAccessedDate() {
+        return lastAccessedDate;
+    }
+
+    public void setLastAccessedDate(@NonNull Date lastAccessedDate) {
+        this.lastAccessedDate = lastAccessedDate;
+    }
 }

@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.shenexample.tay.tmdb.R;
 
@@ -27,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     public static final String sharedValues = "shared";
-    public static final String refreshed = "refresh";
+    public static final String MAIN_POPULAR_MOVIES_REFRESHED = "main popular movie status";
+    public static final String MAIN_POPULAR_TV_REFRESHED = "main popular tv status";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(sharedValues, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        editor.putBoolean(refreshed, false);
+        editor.putBoolean(MAIN_POPULAR_MOVIES_REFRESHED, false);
+        editor.putBoolean(MAIN_POPULAR_TV_REFRESHED, false);
         editor.apply();
     }
 

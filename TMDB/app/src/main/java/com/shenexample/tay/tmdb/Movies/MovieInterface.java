@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public interface MovieInterface {
 
-    void processMovies(JSONArray movieArray);
+//    void processMovies(JSONArray movieArray);
     void getMovies();
-    void displayMovies(ArrayList<Movie> movieArrayList);
-    void storeMoviesInDatabase(ArrayList<Movie> selectedMovies);
+    void displayStoredMovies();
+    void storeMoviesInDatabase(JSONArray movieList);
 }

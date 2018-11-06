@@ -12,6 +12,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieRepository {
@@ -78,38 +79,87 @@ public class MovieRepository {
         }
     }
 
-//    public void StoreAllMovies(JSONArray array) {
-//       storeMoviesTask task = new storeMoviesTask();
-//       Log.d("Storing", "Got to storing all movies");
-//        try {
-//            task.execute(array);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void StoreAllMovies(JSONArray array) {
+        storeMoviesTask task = new storeMoviesTask();
+        try {
+            task.execute(array);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-//    private class storeMoviesTask extends AsyncTask<JSONArray, Void, Void> {
-//
-//        @Override
-//        protected Void doInBackground(JSONArray... jsonArrays) {
-//            JSONArray myArray = jsonArrays[0];
-//            for (int i = 0; i < myArray.length(); i++) {
-//                try {
-//                    Movie movie = convertJsonToMovie(myArray.getJSONObject(i));
-//                    insertAsync(movie);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    Log.d("MovieAccessError", "Movie at index " + i + " not found, skipping.");
-//                }
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void aVoid) {
-//            fragment.processMovies();
-//        }
-//    }
+    private class storeMoviesTask extends AsyncTask<JSONArray, Void, Void> {
+
+        @Override
+        protected Void doInBackground(JSONArray... jsonArrays) {
+            JSONArray myArray = jsonArrays[0];
+            for (int i = 0; i < myArray.length(); i++) {
+                try {
+                    ConvertMovieTask task = new ConvertMovieTask();
+                    task.execute(myArray.getJSONObject(i));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.d("MovieAccessError", "Movie at index " + i + " not found, skipping.");
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            fragment.displayStoredMovies();
+        }
+    }
+
+    private class ConvertMovieTask extends AsyncTask<JSONObject, Void, Void> {
+        Movie myMovie;
+
+        protected Void doInBackground(JSONObject... objects) {
+            JSONObject object = objects[0];
+
+            try {
+                myMovie = convertJsonToMovie(object);
+                String path = "http://image.tmdb.org/t/p/w300" + myMovie.getPoster_path();
+
+                try {
+                    InputStream in = new java.net.URL(path).openStream();
+                    Bitmap icon = BitmapFactory.decodeStream(in);
+                    myMovie.setMovieIconBitmap(icon);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                insertAsync(myMovie);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.d("MovieConversionError", "Could not convert " + object.toString());
+            }
+
+            return null;
+        }
+    }
+
+    private Movie convertJsonToMovie(JSONObject o) {
+        Movie myMovie = new Movie();
+        try {
+            String posterPath = o.getString("poster_path");
+            myMovie.setVote_count(o.getString("vote_count"));
+            myMovie.setMovie_id(o.getString("id"));
+            myMovie.setVote_average(o.getString("vote_average"));
+            myMovie.setTitle(o.getString("title"));
+            myMovie.setPopularity(o.getString("popularity"));
+            myMovie.setPoster_path(posterPath);
+            myMovie.setBackdrop_path(o.getString("backdrop_path"));
+            myMovie.setOverview(o.getString("overview"));
+            myMovie.setRelease_date(o.getString("release_date"));
+            myMovie.updateDate();
+        } catch (Exception e) {
+            Log.d("MovieConversionError", "Could not convert json to movie object. ");
+            e.printStackTrace();
+        }
+
+        return myMovie;
+    }
 
     public void insertAsync(Movie movie) {
         new insertMovieAsync(movieDAO).execute(movie);

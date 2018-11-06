@@ -1,5 +1,10 @@
 package com.shenexample.tay.tmdb.Main;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.shenexample.tay.tmdb.Database.Movie;
 import com.shenexample.tay.tmdb.Database.MovieSorter;
 import com.shenexample.tay.tmdb.Movies.MovieAdapter;
@@ -25,6 +30,13 @@ public class MainMovieFragment extends MovieFragment {
     }
 
     public void getMovies() {
+
+        SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(MainActivity.sharedValues, Context.MODE_PRIVATE);
+
+        if (!preferences.getBoolean(MainActivity.refreshed, true)) {
+            Log.d("Preference value", "false");
+        }
+
         api = new MovieApi(this);
         api.getPopularMovies();
     }

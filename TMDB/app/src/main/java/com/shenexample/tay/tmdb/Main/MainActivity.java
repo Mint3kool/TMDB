@@ -1,6 +1,8 @@
 package com.shenexample.tay.tmdb.Main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.shenexample.tay.tmdb.R;
 
@@ -20,9 +23,11 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private int savedFragmentId = 0;
 
-    public MainActivity() {
-        Log.d("Testing", "Constructor called");
-    }
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    public static final String sharedValues = "shared";
+    public static final String refreshed = "refresh";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +36,21 @@ public class MainActivity extends AppCompatActivity {
 
         setupNavigationDrawer();
         Log.d("Testing", "onCreate called");
+
+        sharedPreferences = getSharedPreferences(sharedValues, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        editor.putBoolean(refreshed, false);
+        editor.apply();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         setupMainActivityTabs();
-        Log.d("Testing", "onStart called");
     }
 
-    public void setupMainActivityTabs() {
+    private void setupMainActivityTabs() {
         MainPageAdapter myAdapter = new MainPageAdapter(getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(myAdapter);
@@ -51,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    public void setupNavigationDrawer() {
+    private void setupNavigationDrawer() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

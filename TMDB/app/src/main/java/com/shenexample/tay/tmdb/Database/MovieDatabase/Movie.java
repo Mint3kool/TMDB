@@ -1,12 +1,15 @@
-package com.shenexample.tay.tmdb.Database;
+package com.shenexample.tay.tmdb.Database.MovieDatabase;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+
+import com.shenexample.tay.tmdb.Database.Converters;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
@@ -33,6 +36,7 @@ public class Movie implements Serializable{
     private String poster_path;
     private String backdrop_path;
     private String overview;
+    @Ignore
     private byte[] movieIcon;
     @NonNull
     private Date lastAccessedDate;

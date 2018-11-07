@@ -1,17 +1,13 @@
-package com.shenexample.tay.tmdb.Database;
+package com.shenexample.tay.tmdb.Database.TVDatabase;
 
-import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-@Dao
-public interface MovieDAO {
-    String TABLE_NAME = "Movie_Table";
+public interface ShowDAO {
+    String TABLE_NAME = "Show_Table";
 
     //Finds the last accessed date of the 500th item and deletes all items older than it
     String REMOVE_EXTRA_ROWS = "" +
@@ -21,33 +17,33 @@ public interface MovieDAO {
             ") order by lastAccessedDate asc limit 1)";
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Movie movie);
+    void insert(Show show);
 
     @Query("DELETE FROM " + TABLE_NAME)
     void deleteAll();
 
     @Query("SELECT * FROM " + TABLE_NAME )
-    List<Movie> getAllMovies();
+    List<Show> getAllShows();
 
     @Query("SELECT * FROM " + TABLE_NAME + " ORDER BY popularity LIMIT 20")
-    List<Movie> getPopularMovies();
+    List<Show> getPopularShows();
 
     @Query("SELECT * FROM " + TABLE_NAME + " ORDER BY :category LIMIT :start, :finish")
-    List<Movie> getNextPage(String category, int start, int finish);
+    List<Show> getNextPage(String category, int start, int finish);
 
-    @Query("SELECT * FROM " + TABLE_NAME + " WHERE movie_id = :id")
-    Movie getMovie(int id);
+    @Query("SELECT * FROM " + TABLE_NAME + " WHERE show_id = :id")
+    Show getShow(int id);
 
     /**
      * Removes the 500 oldest items
      */
     @Query(REMOVE_EXTRA_ROWS)
-    void deleteExtraRows();
+    void deleteExtraShows();
 
     /**
      * Deletes all items last accessed before a certain date
      * @param date the oldest item you want to save
      */
     @Query("DELETE FROM " + TABLE_NAME + " WHERE lastAccessedDate < :date")
-    void deleteOldItems(Long date);
+    void deleteOldShows(Long date);
 }

@@ -1,12 +1,10 @@
-package com.shenexample.tay.tmdb.Database;
+package com.shenexample.tay.tmdb.Database.MovieDatabase;
 
 import android.app.Application;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.shenexample.tay.tmdb.Movies.MovieFragment;
 
@@ -24,7 +22,7 @@ public class MovieRepository {
     private MovieFragment fragment;
 
     public MovieRepository(Application app, MovieFragment fragment) {
-        TMDBRoomDb db = TMDBRoomDb.getDatabase(app);
+        MovieDatabaseInit db = MovieDatabaseInit.getDatabase(app);
         movieDAO = db.movieDAO();
         this.fragment = fragment;
     }

@@ -1,30 +1,28 @@
-package com.shenexample.tay.tmdb.Database;
+package com.shenexample.tay.tmdb.Database.MovieDatabase;
 
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 @Database(entities = {Movie.class}, version = 1)
-public abstract class TMDBRoomDb extends RoomDatabase{
+public abstract class MovieDatabaseInit extends RoomDatabase{
 
     public abstract MovieDAO movieDAO();
 
-    public static TMDBRoomDb INSTANCE;
+    public static MovieDatabaseInit INSTANCE;
 
     /**
      * Sets up the local database connection
      * @param ctx the current application context
      * @return a valid database instance
      */
-    static TMDBRoomDb getDatabase(final Context ctx) {
+    static MovieDatabaseInit getDatabase(final Context ctx) {
         if (INSTANCE == null) {
-            synchronized (TMDBRoomDb.class) {
+            synchronized (MovieDatabaseInit.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(ctx.getApplicationContext(),
-                            TMDBRoomDb.class, MovieDAO.TABLE_NAME).fallbackToDestructiveMigration().build();
+                            MovieDatabaseInit.class, MovieDAO.TABLE_NAME).fallbackToDestructiveMigration().build();
                 }
             }
         }

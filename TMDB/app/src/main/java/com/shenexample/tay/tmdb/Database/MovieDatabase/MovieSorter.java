@@ -1,4 +1,4 @@
-package com.shenexample.tay.tmdb.Database;
+package com.shenexample.tay.tmdb.Database.MovieDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Comparator;

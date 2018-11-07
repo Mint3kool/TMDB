@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.shenexample.tay.tmdb.Database.Movie;
+import com.shenexample.tay.tmdb.Database.MovieDatabase.Movie;
 import com.shenexample.tay.tmdb.R;
 
 import java.util.List;

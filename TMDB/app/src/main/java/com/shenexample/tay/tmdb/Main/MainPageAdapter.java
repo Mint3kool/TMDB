@@ -4,9 +4,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-
-import com.shenexample.tay.tmdb.R;
 
 public class MainPageAdapter extends FragmentPagerAdapter{
 
@@ -48,7 +45,7 @@ public class MainPageAdapter extends FragmentPagerAdapter{
                 returnFragment = new MainMovieFragment();
                 break;
             case 2:
-                returnFragment = new MainTvFragment();
+                returnFragment = new MainShowFragment();
                 break;
             default:
                 returnFragment = new HomeFragment();

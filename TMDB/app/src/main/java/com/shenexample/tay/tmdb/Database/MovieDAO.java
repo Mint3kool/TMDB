@@ -38,9 +38,16 @@ public interface MovieDAO {
     @Query("SELECT * FROM " + TABLE_NAME + " WHERE movie_id = :id")
     Movie getMovie(int id);
 
+    /**
+     * Removes the 500 oldest items
+     */
     @Query(REMOVE_EXTRA_ROWS)
     void deleteExtraRows();
 
+    /**
+     * Deletes all items last accessed before a certain date
+     * @param date the oldest item you want to save
+     */
     @Query("DELETE FROM " + TABLE_NAME + " WHERE lastAccessedDate < :date")
     void deleteOldItems(Long date);
 }

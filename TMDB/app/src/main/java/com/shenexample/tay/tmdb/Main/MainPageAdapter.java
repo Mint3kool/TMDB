@@ -54,13 +54,7 @@ public class MainPageAdapter extends FragmentPagerAdapter{
                 returnFragment = new HomeFragment();
                 break;
         }
-
-//        FragmentTransaction homeTransaction = fragmentManager.beginTransaction();
-//
-//        homeTransaction.replace(R.id.view_pager, returnFragment);
-//        homeTransaction.addToBackStack(null);
-//
-//        homeTransaction.commit();
+        
         return returnFragment;
     }
 }

@@ -16,6 +16,7 @@ import java.util.Date;
 @Entity(tableName = MovieDAO.TABLE_NAME, indices = {@Index(value = {"movie_id", "title", "release_date"},
         unique = true)})
 @TypeConverters({Converters.class})
+
 public class Movie implements Serializable{
     @PrimaryKey(autoGenerate = true)
     @NonNull

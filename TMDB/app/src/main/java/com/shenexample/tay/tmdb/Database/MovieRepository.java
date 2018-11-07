@@ -1,10 +1,12 @@
 package com.shenexample.tay.tmdb.Database;
 
 import android.app.Application;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.shenexample.tay.tmdb.Movies.MovieFragment;
 
@@ -12,9 +14,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Buffer class for database access logic
+ */
 public class MovieRepository {
     private MovieDAO movieDAO;
     private MovieFragment fragment;
@@ -25,10 +29,18 @@ public class MovieRepository {
         this.fragment = fragment;
     }
 
+    /**
+     * Returns a stored movie by id value
+     * @param id the TMDB movie id
+     * @return a movie with the associated id, null if not found
+     */
     public Movie getMovie(int id) {
         return movieDAO.getMovie(id);
     }
 
+    /**
+     * @return a list of all moves currently stored
+     */
     public List<Movie> getAllMovies() {
         getAllMoviesAsync task = new getAllMoviesAsync(movieDAO);
         try {
@@ -52,10 +64,16 @@ public class MovieRepository {
         }
     }
 
+    /**
+     * Deletes all items from the SQLite database
+     */
     public void deleteMovies() {
         movieDAO.deleteAll();
     }
 
+    /**
+     * @return a list of the top 20 popular movies
+     */
     public List<Movie> getPopularMovies() {
         getPopularMoviesAsync task = new getPopularMoviesAsync(movieDAO);
         try {
@@ -79,6 +97,10 @@ public class MovieRepository {
         }
     }
 
+    /**
+     * Stores all movies after an api call
+     * @param array a JSON response with movies
+     */
     public void StoreAllMovies(JSONArray array) {
         storeMoviesTask task = new storeMoviesTask();
         try {
@@ -88,15 +110,16 @@ public class MovieRepository {
         }
     }
 
-    private class storeMoviesTask extends AsyncTask<JSONArray, Void, Void> {
+    private class storeMoviesTask extends AsyncTask<JSONArray, Integer, Void> {
 
         @Override
         protected Void doInBackground(JSONArray... jsonArrays) {
             JSONArray myArray = jsonArrays[0];
             for (int i = 0; i < myArray.length(); i++) {
                 try {
-                    ConvertMovieTask task = new ConvertMovieTask();
-                    task.execute(myArray.getJSONObject(i));
+                    publishProgress((int)((i/(float)myArray.length())*100));
+                    Movie movie = convertMovie(myArray.getJSONObject(i));
+                    movieDAO.insert(movie);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.d("MovieAccessError", "Movie at index " + i + " not found, skipping.");
@@ -106,37 +129,40 @@ public class MovieRepository {
         }
 
         @Override
+        protected void onProgressUpdate(Integer... progress) {
+            Log.d("Progress", Integer.toString(progress[0]));
+        }
+
+        @Override
         protected void onPostExecute(Void aVoid) {
+            Log.d("Display", "Display movies called");
             fragment.displayStoredMovies();
         }
     }
 
-    private class ConvertMovieTask extends AsyncTask<JSONObject, Void, Void> {
-        Movie myMovie;
+    /**
+     * Converts a Json object to a Movie object
+     */
+    public Movie convertMovie(JSONObject object){
+        Movie myMovie = null;
 
-        protected Void doInBackground(JSONObject... objects) {
-            JSONObject object = objects[0];
+        try {
+            myMovie = convertJsonToMovie(object);
+            String path = "http://image.tmdb.org/t/p/w300" + myMovie.getPoster_path();
 
             try {
-                myMovie = convertJsonToMovie(object);
-                String path = "http://image.tmdb.org/t/p/w300" + myMovie.getPoster_path();
-
-                try {
-                    InputStream in = new java.net.URL(path).openStream();
-                    Bitmap icon = BitmapFactory.decodeStream(in);
-                    myMovie.setMovieIconBitmap(icon);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                insertAsync(myMovie);
+                InputStream in = new java.net.URL(path).openStream();
+                Bitmap icon = BitmapFactory.decodeStream(in);
+                myMovie.setMovieIconBitmap(icon);
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.d("MovieConversionError", "Could not convert " + object.toString());
             }
-
-            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("MovieConversionError", "Could not convert " + object.toString());
         }
+
+        return myMovie;
     }
 
     private Movie convertJsonToMovie(JSONObject o) {
@@ -161,7 +187,10 @@ public class MovieRepository {
         return myMovie;
     }
 
-    public void insertAsync(Movie movie) {
+    /**
+     * @param movie the movie to be inserted
+     */
+    public void insertMovie(Movie movie) {
         new insertMovieAsync(movieDAO).execute(movie);
     }
 

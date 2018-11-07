@@ -14,6 +14,11 @@ public abstract class TMDBRoomDb extends RoomDatabase{
 
     public static TMDBRoomDb INSTANCE;
 
+    /**
+     * Sets up the local database connection
+     * @param ctx the current application context
+     * @return a valid database instance
+     */
     static TMDBRoomDb getDatabase(final Context ctx) {
         if (INSTANCE == null) {
             synchronized (TMDBRoomDb.class) {

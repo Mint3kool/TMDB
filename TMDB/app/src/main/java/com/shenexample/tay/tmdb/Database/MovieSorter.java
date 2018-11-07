@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
 
+/**
+ * Custom sorters by various movie fields
+ */
 public class MovieSorter {
 
     public static Comparator<Movie> popularComparator = new Comparator<Movie>() {

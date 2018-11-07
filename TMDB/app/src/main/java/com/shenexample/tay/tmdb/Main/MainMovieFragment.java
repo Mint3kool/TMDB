@@ -28,9 +28,11 @@ public class MainMovieFragment extends MovieFragment {
         return MAIN_MOVIE_ID;
     }
 
+    /**
+     * Gets popular movies to display
+     */
     public void getMovies() {
-        SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(MainActivity.sharedValues, Context.MODE_PRIVATE);
-
+        SharedPreferences preferences = getPreferences();
         if (!preferences.getBoolean(MainActivity.MAIN_POPULAR_MOVIES_REFRESHED, false)) {
             preferences.edit().putBoolean(MainActivity.MAIN_POPULAR_MOVIES_REFRESHED, true).apply();
             api = new MovieApi(this);
@@ -45,11 +47,14 @@ public class MainMovieFragment extends MovieFragment {
         getRepository().StoreAllMovies(movieList);
     }
 
+    /**
+     * Displays only top 20 popular movies from internal SQLite database
+     */
     public void displayStoredMovies() {
         List<Movie> movieList = getRepository().getPopularMovies();
 
         ArrayList<Movie> movieArrayList = new ArrayList<>();
-        movieArrayList.addAll(movieList);
+        movieArrayList.addAll(movieList); //conversion from List<Movie> since ROOM api does not return an arraylist for an adapter
 
         Collections.sort(movieArrayList, MovieSorter.popularComparator);
 

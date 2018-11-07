@@ -3,6 +3,7 @@ package com.shenexample.tay.tmdb.Main;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +18,9 @@ import android.view.MenuItem;
 
 import com.shenexample.tay.tmdb.R;
 
+/**
+ * Startup activity
+ */
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
@@ -25,13 +29,31 @@ public class MainActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    //Shared preferences name
     public static final String sharedValues = "shared";
+    //Status tag for whether popular movies have been updated on the main screen
     public static final String MAIN_POPULAR_MOVIES_REFRESHED = "main popular movie status";
+    //Status tag for whether popular Tv shows have been updated on the main screen
     public static final String MAIN_POPULAR_TV_REFRESHED = "main popular tv status";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()   // or .detectAll() for all detectable problems
+                .penaltyLog()
+                .build());
+
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+                .detectLeakedClosableObjects()
+                .penaltyLog()
+                .penaltyDeath()
+                .build());
+
         setContentView(R.layout.activity_main);
 
         setupNavigationDrawer();
@@ -40,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences(sharedValues, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        //resetting shared preferences on startup
         editor.putBoolean(MAIN_POPULAR_MOVIES_REFRESHED, false);
         editor.putBoolean(MAIN_POPULAR_TV_REFRESHED, false);
         editor.apply();
@@ -51,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
         setupMainActivityTabs();
     }
 
+    /**
+     * Sets up the scrollable tabs on the initial screen
+     */
     private void setupMainActivityTabs() {
         MainPageAdapter myAdapter = new MainPageAdapter(getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
@@ -62,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    /**
+     * Sets up the navigation drawer on the left hand side
+     */
     private void setupNavigationDrawer() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

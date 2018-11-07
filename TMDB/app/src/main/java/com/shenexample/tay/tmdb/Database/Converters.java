@@ -4,6 +4,9 @@ import android.arch.persistence.room.TypeConverter;
 
 import java.util.Date;
 
+/**
+ * Any necessary conversions for Java types to SQLite information
+ */
 public class Converters {
     @TypeConverter
     public static Date fromTimestamp(Long value) {

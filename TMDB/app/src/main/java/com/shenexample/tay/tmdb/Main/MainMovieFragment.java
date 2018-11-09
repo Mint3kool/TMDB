@@ -37,7 +37,7 @@ public class MainMovieFragment extends MovieFragment {
      * Gets popular movies to display
      */
     public void getMovies() {
-        SharedPreferences preferences = getPreferences();
+        SharedPreferences preferences = getMoviePreferences();
         if (!preferences.getBoolean(MainActivity.MAIN_POPULAR_MOVIES_REFRESHED, false)) {
             preferences.edit().putBoolean(MainActivity.MAIN_POPULAR_MOVIES_REFRESHED, true).apply();
             api = new MovieApi(this);

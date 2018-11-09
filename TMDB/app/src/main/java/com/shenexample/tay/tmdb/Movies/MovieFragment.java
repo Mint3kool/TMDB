@@ -31,7 +31,7 @@ public abstract class MovieFragment extends Fragment implements MovieInterface{
 
     public ListView getMovieListView() { return movieListView; }
 
-    public SharedPreferences getPreferences() {
+    public SharedPreferences getMoviePreferences() {
         return preferences;
     }
 

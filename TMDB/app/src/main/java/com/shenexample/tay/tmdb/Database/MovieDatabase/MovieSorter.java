@@ -23,7 +23,7 @@ public class MovieSorter {
         }
     };
 
-    public static Comparator<Movie> dateComparator = new Comparator<Movie>() {
+    public static Comparator<Movie> releaseDateComparator = new Comparator<Movie>() {
         @Override
         public int compare(Movie movie, Movie t1) {
             Date date1 = null, date2 = null;
@@ -35,9 +35,9 @@ public class MovieSorter {
             }
 
             if (date1.before(date2) && !date1.after(date2)) {
-                return -1;
-            } else {
                 return 1;
+            } else {
+                return -1;
             }
         }
     };

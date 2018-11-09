@@ -88,7 +88,7 @@ public class MainMovieFragment extends MovieFragment {
                         InputStream in = new java.net.URL(path).openStream();
                         Bitmap icon = BitmapFactory.decodeStream(in);
                         popularMovieImages.put(m.getId(), icon);
-                        m.setMovieIconBitmap(icon);
+                        m.setMovieIcon(icon);
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -96,7 +96,7 @@ public class MainMovieFragment extends MovieFragment {
                 }
             } else {
                 for (Movie m : movieArrayList) {
-                    m.setMovieIconBitmap(popularMovieImages.get(m.getId()));
+                    m.setMovieIcon(popularMovieImages.get(m.getId()));
                 }
             }
             return movieArrayList;

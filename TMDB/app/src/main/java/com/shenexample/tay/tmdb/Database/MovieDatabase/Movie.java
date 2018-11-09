@@ -16,8 +16,8 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
-@Entity(tableName = MovieDAO.TABLE_NAME, indices = {@Index(value = {"movie_id", "title", "release_date"},
-        unique = true)})
+@Entity(tableName = MovieDAO.TABLE_NAME,
+        indices = {@Index(value = {"movie_id", "title", "release_date"}, unique = true)})
 @TypeConverters({Converters.class})
 
 public class Movie implements Serializable{
@@ -37,7 +37,7 @@ public class Movie implements Serializable{
     private String backdrop_path;
     private String overview;
     @Ignore
-    private byte[] movieIcon;
+    private Bitmap movieIcon;
     @NonNull
     private Date lastAccessedDate;
 
@@ -125,27 +125,16 @@ public class Movie implements Serializable{
         this.overview = overview;
     }
 
-    public byte[] getMovieIcon() {
+    public Bitmap getMovieIcon() {
         return movieIcon;
     }
 
-    public void setMovieIcon(byte[] value) {
+    public void setMovieIcon(Bitmap value) {
         movieIcon = value;
     }
 
     public void updateDate() {
         lastAccessedDate = Calendar.getInstance().getTime();
-    }
-
-    public Bitmap getMovieIconBitmap() {
-        return BitmapFactory.decodeByteArray(movieIcon, 0, movieIcon.length);
-    }
-
-    public void setMovieIconBitmap(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
-
-        movieIcon = stream.toByteArray();
     }
 
     @NonNull

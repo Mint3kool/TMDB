@@ -1,0 +1,104 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "a4f53c315d147267592d7c7a3c83d920",
+    "entities": [
+      {
+        "tableName": "Movie_Table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `movie_id` TEXT NOT NULL, `title` TEXT NOT NULL, `release_date` TEXT NOT NULL, `vote_count` TEXT, `vote_average` TEXT, `popularity` TEXT, `poster_path` TEXT, `backdrop_path` TEXT, `overview` TEXT, `lastAccessedDate` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "movie_id",
+            "columnName": "movie_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "release_date",
+            "columnName": "release_date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vote_count",
+            "columnName": "vote_count",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "vote_average",
+            "columnName": "vote_average",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "popularity",
+            "columnName": "popularity",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "poster_path",
+            "columnName": "poster_path",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "backdrop_path",
+            "columnName": "backdrop_path",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "overview",
+            "columnName": "overview",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastAccessedDate",
+            "columnName": "lastAccessedDate",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Movie_Table_movie_id_title_release_date",
+            "unique": true,
+            "columnNames": [
+              "movie_id",
+              "title",
+              "release_date"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_Movie_Table_movie_id_title_release_date` ON `${TABLE_NAME}` (`movie_id`, `title`, `release_date`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"a4f53c315d147267592d7c7a3c83d920\")"
+    ]
+  }
+}

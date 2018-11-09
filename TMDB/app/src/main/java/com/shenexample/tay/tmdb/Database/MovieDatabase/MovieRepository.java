@@ -151,7 +151,7 @@ public class MovieRepository {
             try {
                 InputStream in = new java.net.URL(path).openStream();
                 Bitmap icon = BitmapFactory.decodeStream(in);
-                myMovie.setMovieIconBitmap(icon);
+                myMovie.setMovieIcon(icon);
             } catch (Exception e) {
                 e.printStackTrace();
             }

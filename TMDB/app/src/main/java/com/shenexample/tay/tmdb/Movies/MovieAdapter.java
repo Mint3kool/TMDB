@@ -48,7 +48,7 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
 
         ImageView movieIcon = convertView.findViewById(R.id.movie_icon);
         try {
-            movieIcon.setImageBitmap(movie.getMovieIconBitmap());
+            movieIcon.setImageBitmap(movie.getMovieIcon());
         } catch (NullPointerException e) {
             Log.d("Missing Image", movie.getTitle());
             movieIcon.setImageResource(R.drawable.ic_launcher_background);

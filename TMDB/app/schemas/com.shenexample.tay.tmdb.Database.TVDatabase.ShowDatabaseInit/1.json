@@ -1,0 +1,104 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "ebda86671207cab71d6e041093d508b2",
+    "entities": [
+      {
+        "tableName": "Show_Table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `show_id` TEXT NOT NULL, `show_name` TEXT NOT NULL, `first_air_date` TEXT NOT NULL, `popularity` TEXT, `vote_count` TEXT, `poster_path` TEXT, `backdrop_path` TEXT, `vote_average` TEXT, `overview` TEXT, `lastAccessedDate` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "show_id",
+            "columnName": "show_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "show_name",
+            "columnName": "show_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "first_air_date",
+            "columnName": "first_air_date",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "popularity",
+            "columnName": "popularity",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "vote_count",
+            "columnName": "vote_count",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "poster_path",
+            "columnName": "poster_path",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "backdrop_path",
+            "columnName": "backdrop_path",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "vote_average",
+            "columnName": "vote_average",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "overview",
+            "columnName": "overview",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastAccessedDate",
+            "columnName": "lastAccessedDate",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_Show_Table_show_id_show_name_first_air_date",
+            "unique": true,
+            "columnNames": [
+              "show_id",
+              "show_name",
+              "first_air_date"
+            ],
+            "createSql": "CREATE UNIQUE INDEX `index_Show_Table_show_id_show_name_first_air_date` ON `${TABLE_NAME}` (`show_id`, `show_name`, `first_air_date`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ebda86671207cab71d6e041093d508b2\")"
+    ]
+  }
+}

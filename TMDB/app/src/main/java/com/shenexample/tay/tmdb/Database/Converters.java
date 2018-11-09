@@ -1,7 +1,11 @@
 package com.shenexample.tay.tmdb.Database;
 
 import android.arch.persistence.room.TypeConverter;
+import android.arch.persistence.room.TypeConverters;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 /**
